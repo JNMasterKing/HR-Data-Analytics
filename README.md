@@ -1,4 +1,4 @@
-#  HR Data Ana
+#  HR Data Analytics
 
 A comprehensive data science project analyzing **2,000,000 employee records** to identify workforce trends, salary inequities, and attrition risks. This project moves beyond simple EDA to provide a **Strategic Risk-Profiling Model** for proactive talent management.
 
