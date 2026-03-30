@@ -22,7 +22,7 @@ def load_data():
     df['Is_Attrition'] = df['Status'].apply(lambda x: 1 if x in ['Resigned', 'Terminated'] else 0)
     return df
 
-st.title("🚀 Strategic HR Insights & Attrition Dashboard")
+st.title("Strategic HR Insights & Attrition Dashboard")
 st.markdown("Analyze workforce trends, salary equity, and attrition risk across 2,000,000 records.")
 
 # --- SIDEBAR FILTERS ---
