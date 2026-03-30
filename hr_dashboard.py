@@ -11,7 +11,7 @@ st.set_page_config(page_title="Strategic HR Insights Dashboard", layout="wide")
 # --- DATA LOADING ---
 @st.cache_data
 def load_data():
-    df = pd.read_csv("hr_data.csv")
+    df = pd.read_parquet("hr_data.parquet")    
     df['Hire_Date'] = pd.to_datetime(df['Hire_Date'])
     # Calculate Risk Score Heuristics
     median_salary_role = df.groupby('Job_Title')['Salary_INR'].transform('median')
