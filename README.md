@@ -1,4 +1,4 @@
-# 🚀 Strategic HR Analytics & Attrition Prediction Dashboard
+#  HR Data Analytics
 
 A comprehensive data science project analyzing **2,000,000 employee records** to identify workforce trends, salary inequities, and attrition risks. This project moves beyond simple EDA to provide a **Strategic Risk-Profiling Model** for proactive talent management.
 
@@ -72,6 +72,3 @@ The dashboard provides four major views:
 - **Attrition Warning:** Finance is currently the most vulnerable department with a 25.13% attrition rate.
 
 ---
-
-## 🤝 Contributing
-Feel free to fork this project, submit PRs, or report issues. For larger changes, please open an issue first to discuss what you would like to change.
