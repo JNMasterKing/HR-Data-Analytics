@@ -2,5 +2,9 @@
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
-*.png
+
 hr_data.csv
+REPORT_Final_Strategic_Analysis.md
+*.pkl
+*.parquet
+Internship_Timeline.md

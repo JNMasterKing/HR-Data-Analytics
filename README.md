@@ -1,74 +1,81 @@
-#  HR Data Analytics
+# 🚀 HR Data Analytics: Predicting Attrition for 2M Employees
 
-A comprehensive data science project analyzing **2,000,000 employee records** to identify workforce trends, salary inequities, and attrition risks. This project moves beyond simple EDA to provide a **Strategic Risk-Profiling Model** for proactive talent management.
-
----
-
-## 📊 Project Highlights
-- **Scale:** Processes and visualizes a massive dataset of 2M records.
-- **Key Discovery:** Identified a **"Performance-Salary Paradox"** where salary correlates with experience/role but has near-zero correlation with performance ratings.
-- **Attrition Analytics:** Detailed breakdown of the **24.93% overall attrition rate**, pinpointing Finance and Sales as high-risk departments.
-- **Strategic Modeling:** A heuristic-based **Risk Profiling Model** that segments employees into:
-    - 🚨 **High Flight Risk:** Top performers who are underpaid.
-    - ⚠️ **Performance Gap:** Low performers with high compensation.
-    - ✅ **Low Risk:** Balanced workforce core.
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
+![Scikit-Learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
+![Plotly](https://img.shields.io/badge/Plotly-%233F4F75.svg?style=for-the-badge&logo=plotly&logoColor=white)
+![Parquet](https://img.shields.io/badge/Parquet-0072C6?style=for-the-badge&logo=apacheparquet&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-%23FAAAE0.svg?style=for-the-badge&logo=jupyter&logoColor=white)
 
 ---
 
-## 🛠️ Tech Stack
-- **Language:** Python 3.12
-- **Data Manipulation:** Pandas, NumPy
-- **Visualization:** Plotly, Seaborn, Matplotlib
-- **Interactive Dashboard:** Streamlit
-- **Documentation:** Markdown (Detailed Technical Reports Included)
+> **"Transforming static HR data into a high-performance financial decision tool."**
+
+This project analyzes a massive workforce of **2,000,000 employees** to solve one of the most expensive problems in business: **Talent Attrition.** By combining Big Data (Parquet) and Machine Learning (Random Forest), I built a "What-If" simulator that helps HR Directors save millions in turnover costs.
 
 ---
 
-## 📁 Repository Structure
-- `hr_dashboard.py`: Interactive Streamlit dashboard with Plotly visuals.
-- `hr_attrition_analysis.py`: Standalone script for attrition rates and risk scoring.
-- `Project_Report_HR_Analytics.md`: **Final Detailed Technical Report.**
-- `Analysis_Insights.md`: Initial findings from the EDA phase.
-- `attrition_analysis_report.png`: Static visual summary of the attrition study.
-- `HR_Data_Analysis_with_Python.ipynb`: Initial exploration and data cleaning.
+## 📌 The Problem
+*   **High Turnover:** The organization suffers from a **24.93% attrition rate.**
+*   **Pay Inequity:** High performers are often underpaid, leading to "Flight Risk."
+*   **Data Scale:** Standard tools (Excel) crash when handling 2 million records.
+
+## 💡 The Solution
+*   **Big Data Optimization:** Converted 2M rows to **Parquet** for 10x faster loading.
+*   **Predictive AI:** Trained a **Random Forest model** to identify the top reasons for resignations.
+*   **Strategic Dashboard:** Created an interactive **"What-If" Simulator** to predict how salary changes impact retention.
 
 ---
 
-## 🚀 How to Run the Interactive Dashboard
-
-1. **Clone the repository:**
-   ```bash
-   git clone <YOUR_REPO_URL>
-   cd HR_Data_Analytics
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Provide the dataset:**
-   Place your `hr_data.csv` (2,000,000 rows) in the root directory.
-
-4. **Launch the Dashboard:**
-   ```bash
-   streamlit run hr_dashboard.py
-   ```
+## 🛠️ Key Features
+*   🎯 **Risk Profiling:** Identifies 157,784 "High Flight Risk" employees (Top talent likely to leave).
+*   📊 **Interactive Dashboards:** Dynamic filtering by Department, Work Mode, and Performance.
+*   💰 **Financial Forecasting:** Calculates the **ROI of retention** (cost of raises vs. cost of turnover).
+*   🔍 **Feature Importance:** Explains *why* people leave (Salary is 64% of the driver).
 
 ---
 
-## 📈 Key Visuals
-The dashboard provides four major views:
-1. **Workforce KPI Metrics:** Real-time counters for Headcount, Attrition Rate, and Avg Salary.
-2. **Departmental Attrition Heatmap:** Identifying turnover hotspots.
-3. **Risk Profile Donut Chart:** Visualizing the health of the active workforce.
-4. **Interactive Salary Scatter:** Exploring pay equity across experience levels and performance ratings.
+## 📂 Project Pipeline
+The project follows a professional 4-step data science workflow:
+1.  **`01_exploratory_analysis.ipynb`** | Data cleaning & initial insights.
+2.  **`02_train_attrition_model.py`** | ML Training & Big Data optimization (Parquet).
+3.  **`03_heuristic_risk_analysis.py`** | Identifying pay gaps and statistical outliers.
+4.  **`04_strategic_hr_dashboard.py`** | The final interactive Business Intelligence tool.
 
 ---
 
-## 📜 Findings Summary
-- **Hyper-Growth:** The company saw a massive hiring surge starting in 2015.
-- **Remote vs On-site:** 40% of the workforce is remote, impacting retention strategies.
-- **Attrition Warning:** Finance is currently the most vulnerable department with a 25.13% attrition rate.
+## 🚀 Quick Start
+
+1.  **Clone & Install:**
+    ```bash
+    git clone <YOUR_REPO_URL>
+    pip install -r requirements.txt
+    ```
+
+2.  **Run the Pipeline (Training):**
+    ```bash
+    python 02_train_attrition_model.py
+    ```
+
+3.  **Launch the Dashboard:**
+    ```bash
+    streamlit run 04_strategic_hr_dashboard.py
+    ```
 
 ---
+
+## 📈 Strategic Insights
+*   **The Pay Paradox:** Performance and Salary have a **0% correlation**, suggesting a disconnect in pay policy.
+*   **Top Risk Dept:** **Finance** shows the highest attrition rate (25.13%).
+*   **Cost Savings:** Increasing pay for high performers by 15% is projected to save the company **millions in re-hiring costs.**
+
+---
+
+## 📜 Full Documentation
+*   [Final Strategic Report](./REPORT_Final_Strategic_Analysis.md)
+*   [EDA Deep Dive](./REPORT_EDA_Insights.md)
+*   [Internship Timeline](./Internship_Timeline.md)
+
+---
+**Created by [Jaynarayan] during my HR Data Analytics Internship.**
