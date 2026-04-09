@@ -1,9 +1,7 @@
+streamlit
 pandas
-numpy
-seaborn
-matplotlib
-streamlit>=1.30.0
 plotly
 scikit-learn
-pyarrow
 joblib
+numpy
+pyarrow
