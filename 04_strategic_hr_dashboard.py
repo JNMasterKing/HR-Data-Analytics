@@ -52,6 +52,9 @@ sim_df = risk_df[risk_df["Department"].isin(dept_filter)].copy()
 # Snapshot original salary BEFORE raise (Fix #4)
 avg_salary_original = sim_df["Salary_INR"].mean()
 
+# Ensure Salary is float to prevent LossySetitemError/TypeError during multiplication
+sim_df["Salary_INR"] = sim_df["Salary_INR"].astype(float)
+
 # Apply raise only to High Performers
 sim_df.loc[sim_df["Performance_Rating"] >= 4, "Salary_INR"] *= (1 + salary_increase_pct / 100)
 
@@ -95,7 +98,7 @@ with row1_col1:
         color_discrete_sequence=["#636EFA"],
         template="plotly_white"
     )
-    st.plotly_chart(fig_imp, use_container_width=True)
+    st.plotly_chart(fig_imp, width="stretch")
 
 with row1_col2:
     st.subheader("Simulated Attrition Reduction (Probability Distribution)")
@@ -110,7 +113,7 @@ with row1_col2:
         opacity=0.5, nbinsx=50, marker_color="#00CC96"
     ))
     fig_dist.update_layout(barmode="overlay", template="plotly_white")
-    st.plotly_chart(fig_dist, use_container_width=True)
+    st.plotly_chart(fig_dist, width="stretch")
 
 # --- DEPARTMENT BREAKDOWN: Voluntary vs Involuntary (Fix #6) ---
 st.subheader("Attrition by Department: Voluntary vs Involuntary")
@@ -123,7 +126,7 @@ fig_dept = px.bar(
     color_discrete_map={"resignations": "#EF553B", "terminations": "#636EFA"},
     template="plotly_white"
 )
-st.plotly_chart(fig_dept, use_container_width=True)
+st.plotly_chart(fig_dept, width="stretch")
 
 # --- HIGH-RISK ACTION LIST (Fix #9: active employees only) ---
 st.subheader("Top High-Risk Active Employees (Action List)")
@@ -138,7 +141,7 @@ st.dataframe(
         "Performance_Rating", "Experience_Years",
         "Attrition_Probability", "New_Attrition_Prob"
     ]],
-    use_container_width=True
+    width="stretch"
 )
 
 # --- EXPORT (Fix #12: real download button) ---

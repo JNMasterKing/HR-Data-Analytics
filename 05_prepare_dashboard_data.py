@@ -2,11 +2,7 @@ import pandas as pd
 import joblib
 import numpy as np
 
-# =============================================================
-# RUN THIS SCRIPT LOCALLY ONCE after 02_train_attrition_model.py
-# It reads the big 2M-row parquet and produces 5 small files
-# that are safe to commit and load on Streamlit Cloud.
-# =============================================================
+
 
 print("Loading ML-enriched parquet (run locally only)...")
 df = pd.read_parquet("data_processed_ml.parquet")
@@ -72,8 +68,3 @@ feat_df["Feature"] = feat_df["Feature"].replace({
 })
 feat_df.to_parquet("agg_feature_importance.parquet", index=False)
 print(f"  agg_feature_importance.parquet -> {len(feat_df)} rows")
-
-print("\nAll done! Now run:")
-print("  git add agg_*.parquet high_risk_sample.parquet attrition_model.pkl le_dept.pkl le_mode.pkl")
-print('  git commit -m "Add pre-aggregated dashboard data + model artifacts"')
-print("  git push origin fix/cloud-optimized-dashboard")
