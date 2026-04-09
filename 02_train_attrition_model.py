@@ -5,14 +5,23 @@ from sklearn.preprocessing import LabelEncoder
 import joblib
 import os
 
+# Create directories if they don't exist
+os.makedirs("data", exist_ok=True)
+os.makedirs("models", exist_ok=True)
+
 # 1. DATA PREPARATION & OPTIMIZATION
-if not os.path.exists("hr_data.parquet"):
+if not os.path.exists("data/hr_data.parquet"):
     print("Parquet file not found. Converting hr_data.csv to high-performance Parquet format...")
-    pd.read_csv("hr_data.csv").to_parquet("hr_data.parquet")
+    if os.path.exists("data/hr_data.csv"):
+        pd.read_csv("data/hr_data.csv").to_parquet("data/hr_data.parquet")
+    elif os.path.exists("hr_data.csv"):
+        pd.read_csv("hr_data.csv").to_parquet("data/hr_data.parquet")
+    else:
+        print("Error: hr_data.csv not found in root or data/ folder.")
     print("Conversion complete.")
 
 print("Loading Parquet data...")
-df = pd.read_parquet("hr_data.parquet")
+df = pd.read_parquet("data/hr_data.parquet")
 
 # 2. FEATURE ENGINEERING
 print("Engineering features...")
@@ -26,8 +35,8 @@ df['Dept_Code'] = le_dept.fit_transform(df['Department'])
 df['Mode_Code'] = le_mode.fit_transform(df['Work_Mode'])
 
 # Save encoders to ensure consistency in the dashboard
-joblib.dump(le_dept, 'le_dept.pkl')
-joblib.dump(le_mode, 'le_mode.pkl')
+joblib.dump(le_dept, 'models/le_dept.pkl')
+joblib.dump(le_mode, 'models/le_mode.pkl')
 
 # 3. SELECT FEATURES & TRAIN
 # Using a 100k sample for balanced speed and accuracy during training
@@ -45,8 +54,8 @@ X_full = df[['Salary_INR', 'Performance_Rating', 'Experience_Years', 'Dept_Code'
 df['Attrition_Probability'] = model.predict_proba(X_full)[:, 1]
 
 # Save the model and the final ML-enriched dataset
-joblib.dump(model, 'attrition_model.pkl')
-df.to_parquet('data_processed_ml.parquet')
+joblib.dump(model, 'models/attrition_model.pkl')
+df.to_parquet('data/data_processed_ml.parquet')
 
 # 5. FEATURE IMPORTANCE (Senior DS Insight)
 importances = pd.Series(model.feature_importances_, index=X.columns).sort_values(ascending=False)
@@ -54,5 +63,5 @@ print("\n--- Model Insights (Top Attrition Drivers) ---")
 print(importances)
 
 print("\nPipeline complete.")
-print("- Model saved as: attrition_model.pkl")
-print("- Enriched Data saved as: data_processed_ml.parquet")
+print("- Model saved as: models/attrition_model.pkl")
+print("- Enriched Data saved as: data/data_processed_ml.parquet")

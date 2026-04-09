@@ -11,18 +11,18 @@ st.set_page_config(page_title="Strategic HR Modeling & Simulation", layout="wide
 # --- DATA LOADING (Cloud-Optimized: NO 2M row parquet) ---
 @st.cache_data
 def load_data():
-    dept_df   = pd.read_parquet("agg_department.parquet")
-    mode_df   = pd.read_parquet("agg_workmode.parquet")
-    risk_df   = pd.read_parquet("high_risk_sample.parquet")
-    feat_df   = pd.read_parquet("agg_feature_importance.parquet")
-    salary_df = pd.read_parquet("agg_salary_dist.parquet")
+    dept_df   = pd.read_parquet("data/agg_department.parquet")
+    mode_df   = pd.read_parquet("data/agg_workmode.parquet")
+    risk_df   = pd.read_parquet("data/high_risk_sample.parquet")
+    feat_df   = pd.read_parquet("data/agg_feature_importance.parquet")
+    salary_df = pd.read_parquet("data/agg_salary_dist.parquet")
     return dept_df, mode_df, risk_df, feat_df, salary_df
 
 @st.cache_resource
 def load_model():
-    model   = joblib.load("attrition_model.pkl")
-    le_dept = joblib.load("le_dept.pkl")
-    le_mode = joblib.load("le_mode.pkl")
+    model   = joblib.load("models/attrition_model.pkl")
+    le_dept = joblib.load("models/le_dept.pkl")
+    le_mode = joblib.load("models/le_mode.pkl")
     return model, le_dept, le_mode
 
 st.title("🚀 Strategic HR Modeling & 'What-If' Simulation")
