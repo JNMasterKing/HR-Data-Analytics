@@ -8,7 +8,7 @@ import numpy as np
 # --- CONFIGURATION ---
 st.set_page_config(page_title="Strategic HR Modeling & Simulation", layout="wide")
 
-# --- DATA LOADING (Cloud-Optimized: NO 2M row parquet) ---
+# --- DATA LOADING  ---
 @st.cache_data
 def load_data():
     dept_df   = pd.read_parquet("data/agg_department.parquet")
@@ -49,7 +49,7 @@ dept_filter = st.sidebar.multiselect(
 # --- SIMULATION LOGIC (uses 10k Active high-risk sample + real ML model) ---
 sim_df = risk_df[risk_df["Department"].isin(dept_filter)].copy()
 
-# Snapshot original salary BEFORE raise (Fix #4)
+# Snapshot original salary BEFORE raise 
 avg_salary_original = sim_df["Salary_INR"].mean()
 
 # Ensure Salary is float to prevent LossySetitemError/TypeError during multiplication
@@ -58,7 +58,7 @@ sim_df["Salary_INR"] = sim_df["Salary_INR"].astype(float)
 # Apply raise only to High Performers
 sim_df.loc[sim_df["Performance_Rating"] >= 4, "Salary_INR"] *= (1 + salary_increase_pct / 100)
 
-# Re-run real ML model on simulated salaries (Fix #3)
+# Re-run real ML model on simulated salaries 
 sim_df["Dept_Code"] = le_dept.transform(sim_df["Department"])
 sim_df["Mode_Code"] = le_mode.transform(sim_df["Work_Mode"])
 X_sim = sim_df[["Salary_INR", "Performance_Rating", "Experience_Years", "Dept_Code", "Mode_Code"]]
@@ -69,7 +69,7 @@ current_at_risk   = len(sim_df[sim_df["Attrition_Probability"] > attrition_thres
 simulated_at_risk = len(sim_df[sim_df["New_Attrition_Prob"]   > attrition_threshold])
 retention_gain    = current_at_risk - simulated_at_risk
 
-# Cost calculation uses original (pre-raise) salary baseline (Fix #4)
+# Cost calculation uses original (pre-raise) salary baseline 
 cost_per_exit = avg_salary_original * 1.5
 total_savings = retention_gain * cost_per_exit
 
@@ -91,7 +91,7 @@ row1_col1, row1_col2 = st.columns(2)
 
 with row1_col1:
     st.subheader("Model Insights: Key Drivers of Attrition")
-    # Fix #5: real feature importances from model, NOT hardcoded
+    # real feature importances from model   
     fig_imp = px.bar(
         feat_df, x="Feature", y="Importance",
         labels={"Importance": "Importance Score"},
