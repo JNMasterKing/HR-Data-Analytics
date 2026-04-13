@@ -86,7 +86,7 @@ tn, fp, fn, tp = cm.ravel()
 
 report_lines = [
     "=" * 55,
-    "  HR ATTRITION MODEL — EVALUATION REPORT",
+    "  HR ATTRITION MODEL - EVALUATION REPORT",
     "=" * 55,
     "",
     "  Training Sample : 80,000 employees (from 100k sample)",

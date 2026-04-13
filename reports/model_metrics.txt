@@ -1,0 +1,36 @@
+=======================================================
+  HR ATTRITION MODEL - EVALUATION REPORT
+=======================================================
+
+  Training Sample : 80,000 employees (from 100k sample)
+  Test Sample     : 20,000 employees (held-out, stratified)
+  Features        : Salary, Performance, Tenure, Dept, Work Mode
+
+-------------------------------------------------------
+  OVERALL METRICS
+-------------------------------------------------------
+  Accuracy  : 75.09%
+  ROC-AUC   : 0.4965
+
+-------------------------------------------------------
+  CLASSIFICATION REPORT
+-------------------------------------------------------
+              precision    recall  f1-score   support
+
+    Retained       0.75      1.00      0.86     15019
+   Attrition       0.00      0.00      0.00      4981
+
+    accuracy                           0.75     20000
+   macro avg       0.38      0.50      0.43     20000
+weighted avg       0.56      0.75      0.64     20000
+
+-------------------------------------------------------
+  CONFUSION MATRIX
+  Rows = Actual | Cols = Predicted
+-------------------------------------------------------
+                 Pred: Retained   Pred: Attrition
+  Actual: Retained     15018        1
+  Actual: Attrition    4981         0
+
+  TN=15018  FP=1  FN=4981  TP=0
+=======================================================
