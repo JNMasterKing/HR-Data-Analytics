@@ -1,10 +1,18 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
+
+# Create directories if they don't exist
+os.makedirs("reports", exist_ok=True)
 
 # Load the dataset
 print("Loading dataset...")
-df = pd.read_parquet("hr_data.parquet")
+if os.path.exists("data/hr_data.parquet"):
+    df = pd.read_parquet("data/hr_data.parquet")
+else:
+    print("Error: data/hr_data.parquet not found. Please run 02_train_attrition_model.py first.")
+    exit()
 
 # 1. ATTRITION RATE ANALYSIS
 print("Calculating Attrition Rates...")
@@ -60,8 +68,8 @@ sns.scatterplot(data=df.sample(1000), x='Experience_Years', y='Salary_INR', hue=
 axes[1, 1].set_title('Salary vs Experience (Sample of 1000)')
 
 plt.tight_layout()
-plt.savefig('attrition_analysis_report.png')
-print("Analysis complete. Report saved as 'attrition_analysis_report.png'.")
+plt.savefig('reports/attrition_analysis_report.png')
+print("Analysis complete. Report saved as 'reports/attrition_analysis_report.png'.")
 
 # Output key statistics
 print("\n--- Key Statistics ---")
