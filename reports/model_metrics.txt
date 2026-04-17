@@ -4,33 +4,33 @@
 
   Training Sample : 80,000 employees (from 100k sample)
   Test Sample     : 20,000 employees (held-out, stratified)
-  Features        : Salary, Performance, Tenure, Dept, Work Mode
+  Features        : Salary, Relative Salary, Performance, Tenure, Dept, Work Mode
 
 -------------------------------------------------------
   OVERALL METRICS
 -------------------------------------------------------
-  Accuracy  : 75.09%
-  ROC-AUC   : 0.4965
+  Accuracy  : 56.37%
+  ROC-AUC   : 0.4972
 
 -------------------------------------------------------
   CLASSIFICATION REPORT
 -------------------------------------------------------
               precision    recall  f1-score   support
 
-    Retained       0.75      1.00      0.86     15019
-   Attrition       0.00      0.00      0.00      4981
+    Retained       0.75      0.63      0.68     15019
+   Attrition       0.25      0.37      0.29      4981
 
-    accuracy                           0.75     20000
-   macro avg       0.38      0.50      0.43     20000
-weighted avg       0.56      0.75      0.64     20000
+    accuracy                           0.56     20000
+   macro avg       0.50      0.50      0.49     20000
+weighted avg       0.62      0.56      0.59     20000
 
 -------------------------------------------------------
   CONFUSION MATRIX
   Rows = Actual | Cols = Predicted
 -------------------------------------------------------
                  Pred: Retained   Pred: Attrition
-  Actual: Retained     15018        1
-  Actual: Attrition    4981         0
+  Actual: Retained     9451         5568
+  Actual: Attrition    3158         1823
 
-  TN=15018  FP=1  FN=4981  TP=0
+  TN=9451  FP=5568  FN=3158  TP=1823
 =======================================================

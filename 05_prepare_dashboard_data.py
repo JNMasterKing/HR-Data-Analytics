@@ -63,7 +63,7 @@ else:
     print("Error: models/attrition_model.pkl not found.")
     exit()
 
-features = ["Salary_INR", "Performance_Rating", "Experience_Years", "Dept_Code", "Mode_Code"]
+features = ["Salary_INR", "Relative_Salary", "Performance_Rating", "Experience_Years", "Dept_Code", "Mode_Code"]
 feat_df  = (
     pd.Series(model.feature_importances_, index=features)
       .rename_axis("Feature")
@@ -72,6 +72,7 @@ feat_df  = (
 )
 feat_df["Feature"] = feat_df["Feature"].replace({
     "Salary_INR":         "Salary",
+    "Relative_Salary":    "Relative Salary",
     "Performance_Rating": "Performance",
     "Experience_Years":   "Tenure",
     "Dept_Code":          "Department",

@@ -31,6 +31,10 @@ print("Engineering features...")
 # Target: Resigned or Terminated
 df['Is_Attrition'] = df['Status'].apply(lambda x: 1 if x in ['Resigned', 'Terminated'] else 0)
 
+# Add Relative Salary (Heuristic from risk analysis)
+median_salary_role = df.groupby('Job_Title')['Salary_INR'].transform('median')
+df['Relative_Salary'] = df['Salary_INR'] / median_salary_role
+
 # Encode categorical variables for the ML model
 le_dept = LabelEncoder()
 le_mode = LabelEncoder()
@@ -41,42 +45,48 @@ df['Mode_Code'] = le_mode.fit_transform(df['Work_Mode'])
 joblib.dump(le_dept, 'models/le_dept.pkl')
 joblib.dump(le_mode, 'models/le_mode.pkl')
 
-# 3. SELECT FEATURES & TRAIN
+# 3. SELECT FEATURES & SPLIT DATA
 # Using a 100k sample for balanced speed and accuracy during training
-print("Training Random Forest Classifier (100k samples)...")
+print("Preparing training data (100k samples)...")
+features = ['Salary_INR', 'Relative_Salary', 'Performance_Rating', 'Experience_Years', 'Dept_Code', 'Mode_Code']
 train_df = df.sample(100000, random_state=42)
-X = train_df[['Salary_INR', 'Performance_Rating', 'Experience_Years', 'Dept_Code', 'Mode_Code']]
+X = train_df[features]
 y = train_df['Is_Attrition']
 
-model = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42)
-model.fit(X, y)
+# Split training sample 80/20 for honest evaluation
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
 
-# 4. PREDICT ATTRITION PROBABILITY (on all 2 million)
+# 4. TRAIN RANDOM FOREST CLASSIFIER
+print("Training Random Forest Classifier with balanced weights...")
+model = RandomForestClassifier(
+    n_estimators=100, 
+    max_depth=10, 
+    random_state=42, 
+    class_weight="balanced"
+)
+model.fit(X_train, y_train)
+
+# 5. PREDICT ATTRITION PROBABILITY (on all 2 million)
 print("Calculating Attrition Probability for all 2,000,000 employees...")
-X_full = df[['Salary_INR', 'Performance_Rating', 'Experience_Years', 'Dept_Code', 'Mode_Code']]
+X_full = df[features]
 df['Attrition_Probability'] = model.predict_proba(X_full)[:, 1]
 
 # Save the model and the final ML-enriched dataset
 joblib.dump(model, 'models/attrition_model.pkl')
 df.to_parquet('data/data_processed_ml.parquet')
 
-# 5. FEATURE IMPORTANCE
+# 6. FEATURE IMPORTANCE
 importances = pd.Series(model.feature_importances_, index=X.columns).sort_values(ascending=False)
 print("\n--- Model Insights (Top Attrition Drivers) ---")
 print(importances)
 
-# 6. MODEL EVALUATION (Hold-out Test Set)
+# 7. MODEL EVALUATION (Hold-out Test Set)
 print("\nEvaluating model on hold-out test set...")
 
-# Split training sample 80/20 for honest evaluation
-X_tr, X_test, y_tr, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42, stratify=y
-)
-eval_model = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42)
-eval_model.fit(X_tr, y_tr)
-
-y_pred      = eval_model.predict(X_test)
-y_pred_prob = eval_model.predict_proba(X_test)[:, 1]
+y_pred      = model.predict(X_test)
+y_pred_prob = model.predict_proba(X_test)[:, 1]
 
 accuracy = accuracy_score(y_test, y_pred)
 roc_auc  = roc_auc_score(y_test, y_pred_prob)
@@ -91,7 +101,7 @@ report_lines = [
     "",
     "  Training Sample : 80,000 employees (from 100k sample)",
     "  Test Sample     : 20,000 employees (held-out, stratified)",
-    "  Features        : Salary, Performance, Tenure, Dept, Work Mode",
+    "  Features        : Salary, Relative Salary, Performance, Tenure, Dept, Work Mode",
     "",
     "-" * 55,
     "  OVERALL METRICS",
